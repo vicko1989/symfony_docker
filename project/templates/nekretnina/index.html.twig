@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nekretnina index{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+
+    <h1>Nekretnina index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Naslov</th>
+                <th>Opis</th>
+                <th>Cijena</th>
+                <th>Kategorija</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for nekretnina in nekretninas %}
+            <tr>
+                <td>{{ nekretnina.id }}</td>
+                <td>{{ nekretnina.naslov }}</td>
+                <td>{{ nekretnina.opis }}</td>
+                <td>{{ nekretnina.cijena }}</td>
+                <td>{{ nekretnina.kategorija }}</td>
+                <td>
+                    <a href="{{ path('app_nekretnina_show', {'id': nekretnina.id}) }}">show</a>
+                    <a href="{{ path('app_nekretnina_edit', {'id': nekretnina.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_nekretnina_new') }}">Create new</a>
+
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    <script language = "javascript"
+            src = "https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+    <script language = "javascript">
+        $(document).ready(function(){
+            $("#loadnekretnine").on("click", function(event){
+                $.ajax({
+                    url:        '/nekretnina/front',
+                    type:       'POST',
+                    dataType:   'json',
+                    async:      true,
+
+                    success: function(data, status) {
+                        var e = $('<tr><th>Nalov</th><th>Opis</th><th>Cijena</th><th>Kategorija</th></tr>');
+                        $('#nekretnina').html('');
+                        $('#nekretnina').append(e);
+
+                        for(i = 0; i < data.length; i++) {
+                            nekretnina = data[i];
+                            var e = $('<tr><td id = "naslov"></td><td id = "opis"></td><td id = "cijena"></td><td id = "kategorija"></td></tr>');
+
+                            $('#naslov', e).html(nekretnina['naslov']);
+                            $('#opis', e).html(nekretnina['opis']);
+                            $('#cijena', e).html(nekretnina['cijena']);
+                            $('#kategorija', e).html(nekretnina['kategorija']);
+                            $('#nekretnina').append(e);
+                        }
+                    },
+                    error : function(xhr, textStatus, errorThrown) {
+                        console.log('test2');
+                        alert('Ajax request failed.');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .table { border-collapse: collapse; }
+        .table th, td {
+            border-bottom: 1px solid #ddd;
+            width: 250px;
+            text-align: left;
+            align: left;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <a id = "loadnekretnine" href = "#">Dohvati podatke o nekretninama</a>
+    </br>
+    </br>
+
+    <table class = "table">
+        <tbody id = "nekretnina"></tbody>
+    </table>
+{% endblock %}

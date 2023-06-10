@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Nekretnina{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+    <div class="mb-3">
+        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+    </div>
+
+    <h1>Create new Nekretnina</h1>
+
+    {{ include('nekretnina/_form.html.twig') }}
+
+    <a href="{{ path('app_nekretnina_index') }}">back to list</a>
+    {% endif %}
+{% endblock %}
