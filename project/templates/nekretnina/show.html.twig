@@ -31,6 +31,10 @@
                 <th>Kategorija</th>
                 <td>{{ nekretnina.kategorija }}</td>
             </tr>
+            <tr>
+                <th>Slika</th>
+                <td><img class="img-thumbnail" src="{{ asset('uploads/images/' ~ nekretnina.filename) }}" alt="image"></td>
+            </tr>
         </tbody>
     </table>
 

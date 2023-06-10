@@ -14,23 +14,23 @@
                     async:      true,
 
                     success: function(data, status) {
-                        var e = $('<tr><th>Nalov</th><th>Opis</th><th>Cijena</th><th>Kategorija</th></tr>');
+                        var e = $('<tr><th>Nalov</th><th>Opis</th><th>Cijena</th><th>Kategorija</th><th>Slika</th></tr>');
                         $('#nekretnina').html('');
                         $('#nekretnina').append(e);
 
                         for(i = 0; i < data.length; i++) {
                             nekretnina = data[i];
-                            var e = $('<tr><td id = "naslov"></td><td id = "opis"></td><td id = "cijena"></td><td id = "kategorija"></td></tr>');
+                            var e = $('<tr><td id = "naslov"></td><td id = "opis"></td><td id = "cijena"></td><td id = "kategorija"></td><td id = "image"></td></tr>');
 
                             $('#naslov', e).html(nekretnina['naslov']);
                             $('#opis', e).html(nekretnina['opis']);
                             $('#cijena', e).html(nekretnina['cijena']);
                             $('#kategorija', e).html(nekretnina['kategorija']);
+                            $('#image', e).html('<img class="img-thumbnail" src="/uploads/images/'+nekretnina['filename']+'" alt="image"></td>');
                             $('#nekretnina').append(e);
                         }
                     },
                     error : function(xhr, textStatus, errorThrown) {
-                        console.log('test2');
                         alert('Ajax request failed.');
                     }
                 });
@@ -48,6 +48,7 @@
             text-align: left;
             align: left;
         }
+        .img-thumbnail {height: 40px}
     </style>
 {% endblock %}
 

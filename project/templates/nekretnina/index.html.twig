@@ -2,6 +2,12 @@
 
 {% block title %}Nekretnina index{% endblock %}
 
+{% block stylesheets %}
+    <style>
+        .img-thumbnail {height: 40px}
+    </style>
+{% endblock %}
+
 {% block body %}
     {% if app.user %}
         <div class="mb-3">
@@ -18,6 +24,7 @@
                 <th>Opis</th>
                 <th>Cijena</th>
                 <th>Kategorija</th>
+                <th>Slika</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -29,6 +36,7 @@
                 <td>{{ nekretnina.opis }}</td>
                 <td>{{ nekretnina.cijena }}</td>
                 <td>{{ nekretnina.kategorija }}</td>
+                <td><img class="img-thumbnail" src="{{ asset('uploads/images/' ~ nekretnina.filename) }}" alt="image"></td>
                 <td>
                     <a href="{{ path('app_nekretnina_show', {'id': nekretnina.id}) }}">show</a>
                     <a href="{{ path('app_nekretnina_edit', {'id': nekretnina.id}) }}">edit</a>

@@ -25,6 +25,9 @@ class Nekretnina
     #[ORM\Column(length: 100)]
     private ?string $kategorija = null;
 
+    #[ORM\Column(type: 'string')]
+    private $filename;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class Nekretnina
     public function setKategorija(string $kategorija): static
     {
         $this->kategorija = $kategorija;
+
+        return $this;
+    }
+
+    public function getFilename(): string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(string $filename): self
+    {
+        $this->filename = $filename;
 
         return $this;
     }
