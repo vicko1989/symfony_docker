@@ -12,10 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 #[Route('/nekretnina')]
 class NekretninaController extends AbstractController
 {
+    //admin homepage list
     #[Route('/', name: 'app_nekretnina_index', methods: ['GET'])]
     public function index(NekretninaRepository $nekretninaRepository): Response
     {
@@ -24,6 +26,7 @@ class NekretninaController extends AbstractController
         ]);
     }
 
+    //frontend
     #[Route('/front', name: 'app_nekretnina_front', methods: ['GET', 'POST'])]
     public function front(Request $request, NekretninaRepository $nekretninaRepository): Response
     {
@@ -35,6 +38,7 @@ class NekretninaController extends AbstractController
         }
     }
 
+    //create new nekretnina
     #[Route('/new', name: 'app_nekretnina_new', methods: ['GET', 'POST'])]
     public function new(Request $request, NekretninaRepository $nekretninaRepository, SluggerInterface $slugger): Response
     {
@@ -79,6 +83,7 @@ class NekretninaController extends AbstractController
         ]);
     }
 
+    //show nekretnina data and edit or delete it
     #[Route('/{id}', name: 'app_nekretnina_show', methods: ['GET'])]
     public function show(Nekretnina $nekretnina): Response
     {
@@ -87,6 +92,7 @@ class NekretninaController extends AbstractController
         ]);
     }
 
+    //edit nekretnina
     #[Route('/{id}/edit', name: 'app_nekretnina_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Nekretnina $nekretnina, NekretninaRepository $nekretninaRepository, SluggerInterface $slugger): Response
     {
@@ -99,6 +105,15 @@ class NekretninaController extends AbstractController
             $file = $form->get('image')->getData();
 
             if ($file) {
+
+                $filesystem = new Filesystem();
+                $imagePath = './uploads/images/'.$nekretnina->getFilename();
+
+                //check if file exists in public folder
+                if($filesystem->exists($imagePath)){
+                    $filesystem->remove($imagePath);
+                }
+
                 $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
@@ -130,10 +145,20 @@ class NekretninaController extends AbstractController
         ]);
     }
 
+    //delete nekretnina
     #[Route('/{id}', name: 'app_nekretnina_delete', methods: ['POST'])]
     public function delete(Request $request, Nekretnina $nekretnina, NekretninaRepository $nekretninaRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$nekretnina->getId(), $request->request->get('_token'))) {
+
+            $filesystem = new Filesystem();
+            $imagePath = './uploads/images/'.$nekretnina->getFilename();
+
+            //check if file exists in public folder
+            if($filesystem->exists($imagePath)){
+                $filesystem->remove($imagePath);
+            }
+
             $nekretninaRepository->remove($nekretnina, true);
         }
 

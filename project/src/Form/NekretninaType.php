@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints\File;
 
 class NekretninaType extends AbstractType
 {
+    // nekretnina form
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

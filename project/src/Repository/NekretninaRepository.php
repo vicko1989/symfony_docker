@@ -21,6 +21,7 @@ class NekretninaRepository extends ServiceEntityRepository
         parent::__construct($registry, Nekretnina::class);
     }
 
+    // save nekrenina data
     public function save(Nekretnina $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -30,6 +31,7 @@ class NekretninaRepository extends ServiceEntityRepository
         }
     }
 
+    //delete nekretnina data
     public function remove(Nekretnina $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
