@@ -57,7 +57,7 @@ class NekretninaController extends AbstractController
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
-                // Move the file to the directory where brochures are stored
+                // Move the file to the directory where images are stored
                 try {
                     $file->move(
                         $this->getParameter('image_directory'),
@@ -119,7 +119,7 @@ class NekretninaController extends AbstractController
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
-                // Move the file to the directory where brochures are stored
+                // Move the file to the directory where images are stored
                 try {
                     $file->move(
                         $this->getParameter('image_directory'),
